@@ -40,4 +40,20 @@ public class Fichero
 	  * 	Cerrar el fichero
 	  * Fin
 	  */
+	  
+	  //PARTICIÓN
+	  /* INTERFAZ
+	   * Comentario: Divide un fichero en dos, copiando alternativamente en uno y otro, secuencias de registros de longitud N
+	   * Prototipo: partirEnSecuencias()
+	   * Entrada: 
+	   * 		-> El fichero que se desea partir
+	   * 		-> Un fichero donde se guardará una parte del fichero original
+	   * 		-> Otro fichero donde se guardará la otra parte del fichero original
+	   * 		-> un entero para la longitud de las secuencias en las que se partirá el fichero.
+	   * Precondiciones:
+	   * 		-> El fichero que se desea partir no puede estar vacio
+	   * 		-> El entero para la longitud debe ser mayor que 0
+	   * Salidas:
+	   * 
+	   */
 }
