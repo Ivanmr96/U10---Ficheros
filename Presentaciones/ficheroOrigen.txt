@@ -1,0 +1,4 @@
+Este es el texto escrito en un fichero.
+
+
+Hola
