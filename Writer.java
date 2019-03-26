@@ -23,8 +23,12 @@ public class Writer
 			fichero = new File(pathFichero);
 			salidaFichero = new FileOutputStream(fichero, true);
 			writer = new ObjectOutputStream(salidaFichero);
+			OutputStreamWriter osw = new OutputStreamWriter(salidaFichero);
+			BufferedWriter bw = new BufferedWriter(osw);
 			
-			writer.writeObject(obj);
+			bw.append(" ");
+			
+			//writer.writeObject(obj);
 		}
 		catch(IOException e)
 		{
