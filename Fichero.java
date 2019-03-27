@@ -1,6 +1,6 @@
 public class Fichero
 {
-	//ORDENACIÓN HÍBRIDA
+	//ORDENACIÓN HÍBRIDAs
 	/* INTERFAZ
 	 * Comentario: Ordena el fichero
 	 * Prototipo: ordenarFichero(Fichero fichero)
