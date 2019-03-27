@@ -13,20 +13,29 @@ public class PresentacionOutputStreamWriter
 		
 		try
 		{	
-			fichero = new File("fichero.txt");
+			fichero = new File("fichero.dat");
 			salidaFichero = new FileOutputStream(fichero);
-			writer = new OutputStreamWriter(salidaFichero);
-			
+			writer = new OutputStreamWriter(salidaFichero, "ISO-8859-1");
+
 			//Métodos
+		
+			writer.write(23); 	//el numero que representa el caracter dependerá del charset, por defecto ASCII.
 			writer.write('A');
+	
+			writer.flush();		//Es importante usar este método para asegurar que se escribe.
 			
-			writer.flush();		//Es importante usar este método para asegurar
-								//que se escribe, aunque el método close() hace uso de flush y aquí no es necesario.
+			writer.write("\nhola");		//Método heredado de la clase Writer.
 			
-			writer.write('B');
-			writer.write('C');
+			writer.flush();	
 			
-			writer.write("\nEsto es un salto de linea");
+			writer.write("\n¡Y puedo escribir acentos y caracteres españoles!\n");
+			
+			writer.flush();	
+			
+			char[] arrayChar = {'A', 'B', 'C', 'D', 'E', 'F'};		
+			writer.write(arrayChar, 2, (arrayChar.length - 2));
+			
+			writer.flush();
 		}
 		catch(IOException e)
 		{
@@ -37,6 +46,7 @@ public class PresentacionOutputStreamWriter
 			try
 			{
 				writer.close();
+				salidaFichero.close();
 			}
 			catch(IOException e)
 			{

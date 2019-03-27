@@ -24,11 +24,8 @@ public class Writer
 			salidaFichero = new FileOutputStream(fichero, true);
 			writer = new ObjectOutputStream(salidaFichero);
 			OutputStreamWriter osw = new OutputStreamWriter(salidaFichero);
-			BufferedWriter bw = new BufferedWriter(osw);
-			
-			bw.append(" ");
-			
-			//writer.writeObject(obj);
+
+			writer.writeObject(obj);
 		}
 		catch(IOException e)
 		{

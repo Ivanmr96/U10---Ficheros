@@ -1,0 +1,4 @@
+A
+Esto es un salto de línea
+¡Y puedo escribir acentos y caracteres españoles!
+CDEF

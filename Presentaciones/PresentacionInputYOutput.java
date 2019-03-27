@@ -29,7 +29,7 @@ public class PresentacionInputYOutput
 		//Leemos el fichero de origen y lo guardamos en memoria
 		try
 		{
-			ficheroOrigen = new File("ficheroOrigen.txt");
+			ficheroOrigen = new File("fichero.dat");
 			entradaArchivoOrigen = new FileInputStream(ficheroOrigen);
 			reader = new InputStreamReader(entradaArchivoOrigen);
 			
@@ -75,16 +75,16 @@ public class PresentacionInputYOutput
 		//Escribe en el fichero de destino el array guardado en memoria, que contiene el texto del fichero de origen ya leido.
 		try
 		{
-			ficheroDestino = new File("ficheroDestino.txt");
+			ficheroDestino = new File("ficheroNuevo.dat");
 			salidaArchivoDestino = new FileOutputStream(ficheroDestino);
 			writer = new OutputStreamWriter(salidaArchivoDestino);
 			
 			writer.write(array);
 			
-			writer.flush();			//No es necesario ya que el close() en el finally lo usa.
+			writer.flush();	
 			
 			System.out.println();
-			System.out.println("Contenido del fichero copiado con exito");
+			System.out.println("Contenido del fichero copiado con exito.");
 		}
 		catch(IOException e)
 		{

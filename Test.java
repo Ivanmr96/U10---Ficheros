@@ -13,21 +13,14 @@ public class Test
 		Persona persona5 = new Persona("lluy", 55, "DNd", 'H', 711, 1);
 		Persona persona6 = new Persona("buat", 19, " xd", 'M', 84.1, 555);
 		
-		Persona[] array = 
-		{
-			persona, persona2, persona3, persona4, persona5, persona6
-		};
-		
-		for(int i = 0 ; i < array.length ; i++)
-		{
-			writer.insertarObjeto(array[i], "Personas.txt");
-		}
-		
+			writer.insertarObjeto(persona, "Personas2.txt");
+
+		/*
 		for(int i = 0 ; i < array.length ; i++)
 		{
 			persona = (Persona)reader.leerObjeto("Personas.txt");
 			System.out.println(persona.toString());
-		}
+		}*/
 
 	}
 }
