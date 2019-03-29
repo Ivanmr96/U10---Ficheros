@@ -1,5 +1,5 @@
-package tests;
-import clases.UtilidadesFile;
+//package tests;
+//import clases.UtilidadesFile;
 import java.io.File;
 
 public class UtilidadesFileTest {

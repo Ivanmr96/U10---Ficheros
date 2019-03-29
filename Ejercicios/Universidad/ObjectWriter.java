@@ -1,6 +1,10 @@
+//package clases;
+
 import java.io.*;
 
-public class ObjectWriter extends ObjectOutputStream
+
+//Clase necesaria para poder usar ObjectOutputStream sin que escriba cabecera.
+class ObjectWriter extends ObjectOutputStream
 {
 	public ObjectWriter(OutputStream out) throws IOException
     {
@@ -12,7 +16,6 @@ public class ObjectWriter extends ObjectOutputStream
         super();
     }
     
-    protected void writeStreamHeader() throws IOException
-    {
-    }
+    protected void writeStreamHeader() throws IOException{}
 }
+
