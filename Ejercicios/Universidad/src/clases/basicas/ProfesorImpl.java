@@ -1,12 +1,17 @@
-import java.io.Serializable; 
-public class Profesor implements Serializable
+package clases.basicas;
+
+import java.io.Serializable;
+
+import interfaces.Profesor;
+
+public class ProfesorImpl implements Serializable, Profesor
 {
 	private int ID;
 	private String nombre;
 	private char sexo;
 	private int edad;
 	
-	public Profesor(int ID, String nombre, char sexo, int edad)
+	public ProfesorImpl(int ID, String nombre, char sexo, int edad)
 	{
 		this.ID = ID;
 		this.nombre = nombre;
@@ -19,13 +24,19 @@ public class Profesor implements Serializable
 	public char getSexo() { return this.sexo; }
 	public int getEdad() { return this.edad; }
 	
+	public void setNombre(String nombre) { this.nombre = nombre; }
+
+	public void setSexo(char sexo) { this.sexo = sexo; }
+
+	public void setEdad(int edad) { this.edad = edad; }
+	
 	@Override
 	public String toString()
 	{
-		return "ID: " + getID() +
-			   "\nNombre: " + getNombre() + 
-			   "\nSexo: " + getSexo() + 
-			   "\nEdad: " + getEdad();
+		return "" + getID() +
+			   " " + getNombre() + 
+			   " " + getSexo() + 
+			   " " + getEdad();
 	}
 	
 	@Override

@@ -1,10 +1,12 @@
-import java.io.*;
+package tests;
+import clases.basicas.ProfesorImpl;
+import clases.gestion.Gestion;
 
-public class DepartamentoPersonalTest
+public class GestionTest
 {
 	public static void main(String[] args)
 	{
-		DepartamentoPersonal dep = new DepartamentoPersonal();
+		Gestion dep = new Gestion();
 		
 		/*
 		Profesor cristina = new Profesor("Cristina", 'M', 41);
@@ -20,18 +22,30 @@ public class DepartamentoPersonalTest
 		dep.insertarProfesor(clara);
 		* */
 		
-		dep.insertarProfesor(new Profesor(2, "Jesucristo", 'H', 3));
+		ProfesorImpl[] array = {
+		new ProfesorImpl(2, "Jesucristo", 'H', 400),
+		new ProfesorImpl(3, "Maria", 'M', 43),
+		new ProfesorImpl(4, "Ana", 'M', 29),
+		new ProfesorImpl(5, "Pepe", 'H', 42),
+		new ProfesorImpl(6, "Jesús", 'H', 31),
+		new ProfesorImpl(7, "Iván", 'H', 63),
+		};
+		
+		for(int i = 0 ; i < array.length ; i++)
+		{
+			dep.insertarProfesor2(array[i]);
+		}
 		
 		//dep.insertarObjeto(cristina, "personal.txt");
 		
-		File fichero = new File("personal.txt");
+		//File fichero = new File("personal.txt");
 		
 		//System.out.println(fichero.length());
 		
 		//System.out.println();
 		
-		Profesor masJoven = dep.profesorMasJoven();
-		Profesor mayor = dep.profesorMayor();
+		ProfesorImpl masJoven = dep.profesorMasJoven();
+		ProfesorImpl mayor = dep.profesorMayor();
 		
 		System.out.println();
 		System.out.println("Nombre del mas joven: " + masJoven.getNombre() + "(" + masJoven.getEdad() + ")");
@@ -43,5 +57,7 @@ public class DepartamentoPersonalTest
 		System.out.println();
 		
 		System.out.println("Media de edad: " + dep.edadPromedio());
+		System.out.println("Profesores por encima de la media de edad: " + dep.aboveAverageTeachers());
+		System.out.println("Profesores por debajo de la media de edad: " + dep.belowAverageTeachers());
 	}
 }
