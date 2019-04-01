@@ -108,17 +108,29 @@ public class Gestion
 			reader = new FileReader(fichero);
 			br = new BufferedReader(reader);
 			
-			
 			//int IDLeidoStr = reader.read();
-			String[] array = br.readLine().split(",");
-			String IDLeido = array[0];									//El primer ID
-			while(IDLeido != null && Integer.parseInt(IDLeido) != ID)
+			//String registro = br.readLine(); //Lee el primer registro
+			
+			String linea = br.readLine();	//Leer la primera línea
+			String IDLeido = null;
+			String[] array = null;
+			
+			if(linea != null)	//Si el registro no está vacio
 			{
-				array = br.readLine().split(",");
-				IDLeido = array[0]; //El ID del siguiente
+				array = linea.split(",");			//guardar los campos
+				IDLeido = array[0];					//El primer ID
+			}
+			while(linea != null && Integer.parseInt(IDLeido) != ID)		//Si el registro no está vacío ni coincide con la ID a buscar.
+			{
+				linea = br.readLine();		//leer otra línea
+				if(linea != null)
+				{
+					array = linea.split(",");
+					IDLeido = array[0]; 	//El ID del siguiente
+				}
 			}
 			
-			if(IDLeido != null)
+			if(linea != null)			//Si ha encontrado el ID
 			{
 				String nombre = array[1];
 				String sexoStr = array[2];

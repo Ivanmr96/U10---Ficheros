@@ -22,13 +22,15 @@ public class GestionTest
 		for(int i = 0 ; i < array.length ; i++)
 		{
 			dep.insertarProfesor2(array[i]);
-		}
+		} 
+		
+		int id = 4;
 		
 		System.out.println("Intentando insertar un profesor con una ID ya existente...");
-		System.out.print("dep.insertarProfesor(new ProfesorImpl(2, \"Pedro\", 'H', 40)): ");
-		boolean insertado = dep.insertarProfesor2(new ProfesorImpl(2, "Pedro", 'H', 40));
+		System.out.print("dep.insertarProfesor(new ProfesorImpl("+id+", \"Pedro\", 'H', 40)): ");
+		boolean insertado = dep.insertarProfesor2(new ProfesorImpl(id, "Pedro", 'H', 40));
 		if(insertado == false)
-			System.out.println("Ya existe un profesor con la ID 2");
+			System.out.println("Ya existe un profesor con la ID "+id);
 		
 		
 		System.out.println();
@@ -40,6 +42,7 @@ public class GestionTest
 			System.out.println(profesor.toString());
 		}
 		
+		/*
 		ProfesorImpl masJoven = dep.profesorMasJoven2();
 		ProfesorImpl mayor = dep.profesorMayor2();
 		double media = dep.edadPromedio2();
@@ -55,6 +58,6 @@ public class GestionTest
 
 		System.out.println("dep.mostrarProfesores(): ");
 		dep.mostrarProfesores2();
-	
+		 */
 	}
 }
