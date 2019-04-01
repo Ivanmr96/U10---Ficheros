@@ -48,9 +48,9 @@ public class ProfesorImpl implements Serializable, Profesor, Cloneable
 	public String toString()
 	{
 		return "" + getID() +
-			   "\n" + getNombre() + 
-			   "\n" + getSexo() + 
-			   "\n" + getEdad();
+			   "," + getNombre() + 
+			   "," + getSexo() + 
+			   "," + getEdad();
 	}
 	
 	@Override

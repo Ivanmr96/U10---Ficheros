@@ -9,6 +9,7 @@ import clases.utilidad.Utilidades;
 public class Gestion
 {	
 	//TODO Métodos para borrar un profesor y actualizar un profesor
+	//TODO Cambiar la representacion como String de la clase Profesor(en lugar de varias lineas, en una sola) 
 	
 	/* INTERFAZ
 	 * Comentario: Inserta un profesor en el fichero "personal.txt"
@@ -62,7 +63,7 @@ public class Gestion
 				writer = new FileWriter(fichero, true);
 			
 				writer.write(prof.toString());			//Atributos del profesor
-				writer.write("\n0\n");					//Marcador de borrado
+				writer.write(",0");						//Marcador de borrado
 				writer.write(10);						//Salto de línea
 				ret = true;
 			}
@@ -109,22 +110,19 @@ public class Gestion
 			
 			
 			//int IDLeidoStr = reader.read();
-			String IDLeido = br.readLine();						//Lee el primer ID
+			String[] array = br.readLine().split(",");
+			String IDLeido = array[0];									//El primer ID
 			while(IDLeido != null && Integer.parseInt(IDLeido) != ID)
 			{
-				br.readLine(); //Para saltar el nombre
-				br.readLine(); //Para saltar el sexo
-				br.readLine(); //Para saltar la edad
-				br.readLine(); //Para saltar el indicador de borrado
-				br.readLine(); //Salta el espacio en blanco entre cada registro
-				IDLeido = br.readLine(); //Lee el ID del siguiente
+				array = br.readLine().split(",");
+				IDLeido = array[0]; //El ID del siguiente
 			}
 			
 			if(IDLeido != null)
 			{
-				String nombre = br.readLine();
-				String sexoStr = br.readLine();
-				String edadStr = br.readLine();
+				String nombre = array[1];
+				String sexoStr = array[2];
+				String edadStr = array[3];
 				
 				//System.out.println("" + IDLeido + nombre + sexoStr + edadStr);
 				
@@ -491,6 +489,7 @@ public class Gestion
 												Integer.parseInt(edadStr));
 					
 					System.out.println(profesor.toString());
+					System.out.println();
 				}
 				
 				br.readLine(); //Lee el espacio en blanco entre profesores
