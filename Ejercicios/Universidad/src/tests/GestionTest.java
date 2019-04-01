@@ -42,13 +42,13 @@ public class GestionTest
 			System.out.println(profesor.toString());
 		}
 		
-		/*
+		
 		ProfesorImpl masJoven = dep.profesorMasJoven2();
 		ProfesorImpl mayor = dep.profesorMayor2();
 		double media = dep.edadPromedio2();
 		
-		System.out.println("dep.profesorMasJoven(): " + masJoven.getNombre() + "(" + masJoven.getEdad() + ")" );
-		System.out.println("dep.profesorMayor(): " + mayor.getNombre() + "(" + mayor.getEdad() + ")" );
+		System.out.println("dep.profesorMasJoven(): " + masJoven.getNombre() + "(" + masJoven.getEdad() + " años)" );
+		System.out.println("dep.profesorMayor(): " + mayor.getNombre() + "(" + mayor.getEdad() + " años)" );
 		System.out.println("dep.edadPromedio(): " + media);
 		System.out.println("Profesores por encima de la media de edad: " + dep.aboveAverageTeachers2());
 		System.out.println("Profesores por debajo de la media de edad: " + dep.belowAverageTeachers2());
@@ -58,6 +58,6 @@ public class GestionTest
 
 		System.out.println("dep.mostrarProfesores(): ");
 		dep.mostrarProfesores2();
-		 */
+		
 	}
 }

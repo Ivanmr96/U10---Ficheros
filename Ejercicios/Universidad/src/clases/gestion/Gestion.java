@@ -11,20 +11,7 @@ public class Gestion
 	//TODO Métodos para borrar un profesor y actualizar un profesor
 	//TODO Cambiar la representacion como String de la clase Profesor(en lugar de varias lineas, en una sola) 
 	
-	/* INTERFAZ
-	 * Comentario: Inserta un profesor en el fichero "personal.txt"
-	 * Prototipo: public void insertarProfesor(ProfesorImpl prof)
-	 * Entrada: Un profesor a insertar
-	 * Precondiciones: No hay
-	 * Salida: No hay
-	 * Postcondiciones: El fichero "personal.txt" se modifica, insertando al final el profesor indicado
-	 */
-	public void insertarProfesor(ProfesorImpl prof)
-	{
-		Utilidades utils = new Utilidades();
-		
-		utils.insertarObjeto(prof, "personal.txt");
-	}
+	
 	
 	/* INTERFAZ
 	 * Comentario: Inserta un profesor en el fichero "personal.txt"
@@ -182,72 +169,20 @@ public class Gestion
 		return ret;
 	}
 	
-	/* INTERFAZ
-	 * Comentario: Busca el profesor más joven en el fichero "personal.txt"
-	 * Prototipo: public ProfesorImpl profesorMasJoven()
-	 * Entrada: No hay
-	 * Precondiciones: El fichero "personal.txt" debe existir y tener al menos un profesor
-	 * Salida: Un Profesor
-	 * Postcondiciones: Asociado al nombre devuelve el profesor más joven
-	 */
-	@Deprecated
-	public ProfesorImpl profesorMasJoven()
-	{
-		ProfesorImpl masJoven = new ProfesorImpl(0, " ", '-', 100);
-		File fichero = null;
-		FileInputStream entradaFichero = null;
-		ObjectInputStream reader = null;
-		
-		try
-		{
-			fichero = new File("personal.txt");
-			entradaFichero = new FileInputStream(fichero);
-			reader = new ObjectInputStream(entradaFichero);
-			ProfesorImpl profesor = (ProfesorImpl)reader.readObject();
-			while(profesor != null)
-			{
-				profesor = (ProfesorImpl)reader.readObject();
-				
-				if(profesor.getEdad() < masJoven.getEdad())
-					masJoven = profesor;
-			}
-		}
-		catch(EOFException e){}
-		catch(IOException e)
-		{
-			System.out.println(e);
-		}
-		catch(ClassNotFoundException e)
-		{
-			System.out.println(e);
-		}
-		finally
-		{
-			try
-			{
-				reader.close();
-				entradaFichero.close();
-			}
-			catch(IOException e)
-			{
-				System.out.println(e);
-			}
-		}
-		
-		return masJoven;
-	}
+	
 	
 	public ProfesorImpl profesorMasJoven2()
 	{
 		File fichero = null;
 		FileReader reader = null;
 		BufferedReader br = null;
-		String ID = "";
+		int ID = 0;
 		String nombre = "";
-		String sexoStr = "";
-		String edadStr = "";
-		String marcaBorrado = "";
+		char sexo = ' ';
+		int edad = 0;
+		int marcaBorrado;
 		ProfesorImpl masJoven = new ProfesorImpl(0, "", ' ', 100);
+		ProfesorImpl profesor;
 		
 		try
 		{
@@ -255,26 +190,25 @@ public class Gestion
 			reader = new FileReader(fichero);
 			br = new BufferedReader(reader);
 			
-			ID = br.readLine();						//Lee el primer ID
-			nombre = br.readLine();					//Lee el primer nombre
-			sexoStr = br.readLine();				//Lee el primer sexo
-			edadStr = br.readLine();				//Lee la primera edad
-			marcaBorrado = br.readLine();			//Lee la primera marca de borrado
-			while(ID != null)
+			
+			String linea = br.readLine(); 			//Lee el primer registro
+		
+			while(linea != null)
 			{
-				if(Integer.parseInt(edadStr) < masJoven.getEdad() && Integer.parseInt(marcaBorrado) == 0)
-				{
-					masJoven = new ProfesorImpl(Integer.parseInt(ID), 
-												nombre, 
-												sexoStr.charAt(0), 
-												Integer.parseInt(edadStr));
-				}
-				br.readLine(); //Lee el espacio en blanco entre profesores
-				ID = br.readLine(); //Lee el ID del siguiente
-				nombre = br.readLine();
-				sexoStr = br.readLine();
-				edadStr = br.readLine();
-				marcaBorrado = br.readLine();
+				String[] campos = linea.split(",");
+				
+				ID = Integer.parseInt(campos[0]);
+				nombre = campos[1];
+				sexo = campos[2].charAt(0);
+				edad = Integer.parseInt(campos[3]);
+				marcaBorrado = Integer.parseInt(campos[4]);
+				
+				profesor = new ProfesorImpl(ID, nombre, sexo, edad);
+				
+				if(profesor.getEdad() < masJoven.getEdad() && marcaBorrado == 0)
+					masJoven = profesor;
+				
+				linea = br.readLine();
 			}
 			
 		}
@@ -298,71 +232,21 @@ public class Gestion
 		return masJoven;
 	}
 	
-	/* INTERFAZ
-	 * Comentario: Busca el profesor con más edad en el fichero "personal.txt"
-	 * Prototipo: public ProfesorImpl profesorMayor()
-	 * Entrada: No hay
-	 * Precondiciones: El fichero "personal.txt" debe existir y tener al menos un profesor
-	 * Salida: Un Profesor
-	 * Postcondiciones: Asociado al nombre devuelve el profesor con más edad.
-	 */
-	@Deprecated
-	public ProfesorImpl profesorMayor()
-	{
-		ProfesorImpl mayor = new ProfesorImpl(0, " ", '-', 0);
-		File fichero = null;
-		FileInputStream entradaFichero = null;
-		ObjectInputStream reader = null;
-		
-		try
-		{
-			fichero = new File("personal.txt");
-			entradaFichero = new FileInputStream(fichero);
-			reader = new ObjectInputStream(entradaFichero);
-			ProfesorImpl profesor = (ProfesorImpl)reader.readObject();
-			while(profesor != null)
-			{
-				profesor = (ProfesorImpl)reader.readObject();
-				if(profesor.getEdad() > mayor.getEdad())
-					mayor = profesor;
-			}
-		}
-		catch(EOFException e){}
-		catch(IOException e)
-		{
-			System.out.println(e);
-		}
-		catch(ClassNotFoundException e)
-		{
-			System.out.println(e);
-		}
-		finally
-		{
-			try
-			{
-				reader.close();
-				entradaFichero.close();
-			}
-			catch(IOException e)
-			{
-				System.out.println(e);
-			}
-		}
-		
-		return mayor;
-	}
+	
 	
 	public ProfesorImpl profesorMayor2()
 	{
 		File fichero = null;
 		FileReader reader = null;
 		BufferedReader br = null;
-		String ID = "";
+		int ID = 0;
 		String nombre = "";
-		String sexoStr = "";
-		String edadStr = "";
-		String marcaBorrado = "";
+		char sexo= ' ';
+		int edad = 0;
+		int marcaBorrado = 0;
+		String[] campos;
 		ProfesorImpl mayor = new ProfesorImpl(0, "", ' ', 0);
+		ProfesorImpl profesor;
 		
 		try
 		{
@@ -370,26 +254,26 @@ public class Gestion
 			reader = new FileReader(fichero);
 			br = new BufferedReader(reader);
 			
-			ID = br.readLine();						//Lee el primer ID
-			nombre = br.readLine();					//Lee el primer nombre
-			sexoStr = br.readLine();				//Lee el primer sexo
-			edadStr = br.readLine();				//Lee la primera edad
-			marcaBorrado = br.readLine();			//Lee la primera marca de borrado
-			while(ID != null)
+			String linea = br.readLine();			//Lee el primer registro
+			
+			while(linea != null)
 			{
-				if(Integer.parseInt(edadStr) > mayor.getEdad() && Integer.parseInt(marcaBorrado) == 0)
+				campos = linea.split(",");
+				
+				ID = Integer.parseInt(campos[0]);
+				nombre = campos[1];
+				sexo = campos[2].charAt(0);
+				edad = Integer.parseInt(campos[3]);
+				marcaBorrado = Integer.parseInt(campos[4]);
+				
+				profesor = new ProfesorImpl(ID, nombre, sexo, edad);
+				
+				if(profesor.getEdad() > mayor.getEdad() && marcaBorrado == 0)
 				{
-					mayor = new ProfesorImpl(Integer.parseInt(ID), 
-												nombre, 
-												sexoStr.charAt(0), 
-												Integer.parseInt(edadStr));
+					mayor = profesor;
 				}
-				br.readLine(); //Lee el espacio en blanco entre profesores
-				ID = br.readLine(); //Lee el ID del siguiente
-				nombre = br.readLine();
-				sexoStr = br.readLine();
-				edadStr = br.readLine();
-				marcaBorrado = br.readLine();
+				
+				linea = br.readLine(); 		//Lee el siguiente registro
 			}
 			
 		}
@@ -413,59 +297,7 @@ public class Gestion
 		return mayor;
 	}
 	
-	/* INTERFAZ
-	 * Comentario: Muestra en pantalla todos los profesores del fichero "personal.txt"
-	 * Prototipo: public void mostrarProfesores()
-	 * Entrada: No hay
-	 * Precondiciones: El fichero "personal.txt" debe existir y tener al menos un profesor
-	 * Salida: No hay
-	 * Postcondiciones: No hay. Imprime en pantalla todos los profesores del fichero "personal.txt"
-	 */
-	@Deprecated
-	public void mostrarProfesores()
-	{
-		File fichero = null;
-		FileInputStream entradaFichero = null;
-		ObjectInputStream reader = null;
-		
-		try
-		{
-			fichero = new File("personal.txt");
-			entradaFichero = new FileInputStream(fichero);
-			reader = new ObjectInputStream(entradaFichero);
-			
-			ProfesorImpl profesor = (ProfesorImpl)reader.readObject();
-			while(profesor != null)
-			{
-				System.out.println(profesor.toString());
-				System.out.println();
-				profesor = (ProfesorImpl)reader.readObject();
-			}
-		}
-		catch(EOFException e)
-		{
-		}
-		catch(ClassNotFoundException e)
-		{
-			System.out.println(e);
-		}
-		catch(IOException e)
-		{
-			System.out.println(e);
-		}
-		finally
-		{
-			try
-			{
-				reader.close();
-				entradaFichero.close();
-			}
-			catch(IOException e)
-			{
-				System.out.println(e);
-			}
-		}
-	}
+	
 	
 	public void mostrarProfesores2()
 	{
@@ -474,10 +306,10 @@ public class Gestion
 		BufferedReader br = null;
 		String ID = "";
 		String nombre = "";
-		String sexoStr = "";
-		String edadStr = "";
-		String marcaBorrado = "";
-		ProfesorImpl profesor = null;
+		String sexo = "";
+		String edad = "";
+		int marcaBorrado;
+		String[] campos;
 		
 		try
 		{
@@ -485,31 +317,27 @@ public class Gestion
 			reader = new FileReader(fichero);
 			br = new BufferedReader(reader);
 			
-			ID = br.readLine();						//Lee el primer ID
-			nombre = br.readLine();					//Lee el primer nombre
-			sexoStr = br.readLine();				//Lee el primer sexo
-			edadStr = br.readLine();				//Lee la primera edad
-			marcaBorrado = br.readLine();			//Lee la primera marca de borrado
-			while(ID != null)
+			String linea = br.readLine();						//Lee el primer registro
+			while(linea != null)
 			{
+				campos = linea.split(",");
 				
-				if(Integer.parseInt(marcaBorrado) == 0)		//Si el profesor no está marcado como borrado.
+				marcaBorrado = Integer.parseInt(campos[4]);
+				
+				if(marcaBorrado == 0)		//Si el profesor no está marcado como borrado.
 				{
-					profesor = new ProfesorImpl(Integer.parseInt(ID), 
-												nombre, 
-												sexoStr.charAt(0), 
-												Integer.parseInt(edadStr));
+					ID = campos[0];
+					nombre = campos[1];
+					sexo = campos[2];
+					edad = campos[3];
 					
-					System.out.println(profesor.toString());
-					System.out.println();
+					System.out.println("ID: " + ID + "\n" +
+									   "Nombre: " + nombre + "\n" + 
+									   "Sexo: " + sexo + "\n" +
+									   "Edad: " + edad + "\n");
 				}
 				
-				br.readLine(); //Lee el espacio en blanco entre profesores
-				ID = br.readLine(); //Lee el ID del siguiente
-				nombre = br.readLine();
-				sexoStr = br.readLine();
-				edadStr = br.readLine();
-				marcaBorrado = br.readLine();
+				linea = br.readLine(); //Lee el siguiente registro
 			}
 			
 		}
@@ -531,68 +359,7 @@ public class Gestion
 		}
 	}
 	
-	/* INTERFAZ
-	 * Comentario: Calcula la edad promedio de todos los profesores del fichero "personal.txt"
-	 * Prototipo: public double edadPromedio()
-	 * Entrada: No hay
-	 * Precondiciones: El fichero "personal.txt" debe existir y tener al menos un profesor
-	 * Salida: Un double con la edad media
-	 * Postcondiciones: Asociado al nombre devuelve la media de edad de los profesores del fichero "personal.txt"
-	 */
-	@Deprecated
-	public double edadPromedio()
-	{
-		File fichero = null;
-		FileInputStream entradaFichero = null;
-		ObjectInputStream reader = null;
-		int contadorProfesores = 0;
-		double media;
-		double acumuladorEdades = 0;
-		
-		try
-		{
-			fichero = new File("personal.txt");
-			entradaFichero = new FileInputStream(fichero);
-			reader = new ObjectInputStream(entradaFichero);
-			
-			ProfesorImpl profesor = (ProfesorImpl)reader.readObject();
-			contadorProfesores++;
-			acumuladorEdades += profesor.getEdad();
-			while(profesor != null)
-			{
-				profesor = (ProfesorImpl)reader.readObject();
-				contadorProfesores++;
-				acumuladorEdades += profesor.getEdad();
-			}
-		}
-		catch(EOFException e)
-		{
-		}
-		catch(ClassNotFoundException e)
-		{
-			System.out.println(e);
-		}
-		catch(IOException e)
-		{
-			System.out.println(e);
-		}
-		finally
-		{
-			try
-			{
-				reader.close();
-				entradaFichero.close();
-			}
-			catch(IOException e)
-			{
-				System.out.println(e);
-			}
-		}
-		
-		media = acumuladorEdades / contadorProfesores;
-		
-		return media;
-	}
+	
 	
 	/* INTERFAZ
 	 * Comentario: Calcula la edad promedio de todos los profesores del fichero "personal.txt"
@@ -611,6 +378,8 @@ public class Gestion
 		BufferedReader br = null;
 		int acumuladorEdad = 0;
 		int contadorProfesores = 0;
+		String[] campos;
+		int edad, marcaBorrado;
 		
 		try
 		{
@@ -618,32 +387,23 @@ public class Gestion
 			reader = new FileReader(fichero);
 			br = new BufferedReader(reader);
 			
-			br.readLine();								//Salta el primer ID
-			br.readLine();								//Salta el primer nombre
-			br.readLine();								//Salta el primer sexo
-			
-			String edadStr = br.readLine();				//Lee la primera edad
-			if(edadStr != null)
+			String linea = br.readLine();				//Lee el primer registro
+		
+			while(linea != null)
 			{
-				acumuladorEdad += Integer.parseInt(edadStr);
-				contadorProfesores++;
-			}
-			br.readLine();			//Salta la primera marca de borrado
-			while(edadStr != null)
-			{
-				br.readLine(); 					//Lee el espacio en blanco entre profesores
-				br.readLine(); 					//Salta el ID del siguiente
-				br.readLine();					//Salta el nombre
-				br.readLine();					//Salta el sexo
+				campos = linea.split(",");
 				
-				edadStr = br.readLine();
-				if(edadStr != null)
+				marcaBorrado = Integer.parseInt(campos[4]);
+				
+				if(marcaBorrado == 0)
 				{
-					acumuladorEdad += Integer.parseInt(edadStr);
+					edad = Integer.parseInt(campos[3]);
+					
+					acumuladorEdad += edad;
 					contadorProfesores++;
 				}
-				
-				br.readLine();					//Salta la marca de borrado
+
+				linea = br.readLine();					//Lee el siguiente registro
 			}
 		}
 		catch(IOException e)
@@ -668,63 +428,7 @@ public class Gestion
 		return media;
 	}
 	
-	/* INTERFAZ
-	 * Comentario: Cuenta el numero de profesores que están por encima de la media de edad en el fichero personal.txt
-	 * Prototipo: public int belowAverageTeachers()
-	 * Entrada: No hay
-	 * Precondiciones: El fichero "personal.txt" debe existir y tener al menos un profesor
-	 * Salida: Un int con el numero de profesores por encima de la media de edad
-	 * Postcondiciones: Asociado al nombre devuelve el número de profesores por encima del a media de edad en el fichero personal.txt
-	 */
-	@Deprecated
-	public int aboveAverageTeachers()
-	{
-		File fichero = null;
-		FileInputStream entradaFichero = null;
-		ObjectInputStream reader = null;
-		int contadorProfesores = 0;
-		
-		try
-		{
-			fichero = new File("personal.txt");
-			entradaFichero = new FileInputStream(fichero);
-			reader = new ObjectInputStream(entradaFichero);
-			
-			ProfesorImpl profesor = (ProfesorImpl)reader.readObject();
-			while(profesor != null)
-			{
-				if(profesor.getEdad() > edadPromedio())
-					contadorProfesores++;
-				
-				profesor = (ProfesorImpl)reader.readObject();
-			}
-		}
-		catch(EOFException e)
-		{
-		}
-		catch(IOException e)
-		{
-			System.out.println(e);
-		}
-		catch(ClassNotFoundException e)
-		{
-			System.out.println(e);
-		}
-		finally
-		{
-			try
-			{
-				reader.close();
-				entradaFichero.close();
-			}
-			catch(IOException e)
-			{
-				System.out.println(e);
-			}
-		}
-		
-		return contadorProfesores;
-	}
+	
 	
 	/* INTERFAZ
 	 * Comentario: Cuenta el numero de profesores que están por encima de la media de edad en el fichero personal.txt
@@ -740,9 +444,8 @@ public class Gestion
 		FileReader reader = null;
 		BufferedReader br = null;
 		int contadorProfesores = 0;
-		ProfesorImpl profesor = null;
-		
-		String ID, nombre, sexoStr, edadStr, marcaBorrado;
+		String[] campos;
+		int edad, marcaBorrado;
 		
 		try
 		{
@@ -751,26 +454,19 @@ public class Gestion
 			br = new BufferedReader(reader);
 			
 			//ProfesorImpl profesor = (ProfesorImpl)reader.readObject();
-			ID = br.readLine();						//Lee el primer ID
+			String linea = br.readLine();						//Lee el primer registro
 			
-			while(ID != null)
+			while(linea != null)
 			{
-				nombre = br.readLine();					//Lee el nombre
-				sexoStr = br.readLine();				//Lee el sexo
-				edadStr = br.readLine();				//Lee la edad
-				marcaBorrado = br.readLine();			//Lee la marca de borrado
+				campos = linea.split(",");
 				
-				if(Integer.parseInt(marcaBorrado) == 0)
-				{
-					profesor = new ProfesorImpl(Integer.parseInt(ID), nombre, sexoStr.charAt(0), Integer.parseInt(edadStr));
-					
-					if(profesor.getEdad() > edadPromedio2())
-						contadorProfesores++;
-				}
+				edad = Integer.parseInt(campos[3]);
+				marcaBorrado = Integer.parseInt(campos[4]);			//Lee la marca de borrado
 				
-				br.readLine();		//Linea vacia entre cada registro de Profesor
-				ID = br.readLine();
-				//profesor = (ProfesorImpl)reader.readObject();
+				if(marcaBorrado == 0 && edad < edadPromedio2())
+					contadorProfesores++;
+				
+				linea = br.readLine();		//Lee el siguient registro
 			}
 		}
 		catch(EOFException e)
@@ -796,63 +492,7 @@ public class Gestion
 		return contadorProfesores;
 	}
 	
-	/* INTERFAZ
-	 * Comentario: Cuenta el numero de profesores que están por debajo de la media de edad en el fichero personal.txt
-	 * Prototipo: public int belowAverageTeachers()
-	 * Entrada: No hay
-	 * Precondiciones: El fichero "personal.txt" debe existir y tener al menos un profesor
-	 * Salida: Un int con el numero de profesores por debajo de la media de edad
-	 * Postcondiciones: Asociado al nombre devuelve el número de profesores por debajo del a media de edad en el fichero personal.txt
-	 */
-	@Deprecated
-	public int belowAverageTeachers()
-	{
-		File fichero = null;
-		FileInputStream entradaFichero = null;
-		ObjectInputStream reader = null;
-		int contadorProfesores = 0;
-		
-		try
-		{
-			fichero = new File("personal.txt");
-			entradaFichero = new FileInputStream(fichero);
-			reader = new ObjectInputStream(entradaFichero);
-			
-			ProfesorImpl profesor = (ProfesorImpl)reader.readObject();
-			while(profesor != null)
-			{
-				if(profesor.getEdad() < edadPromedio())
-					contadorProfesores++;
-				
-				profesor = (ProfesorImpl)reader.readObject();
-			}
-		}
-		catch(EOFException e)
-		{
-		}
-		catch(IOException e)
-		{
-			System.out.println(e);
-		}
-		catch(ClassNotFoundException e)
-		{
-			System.out.println(e);
-		}
-		finally
-		{
-			try
-			{
-				reader.close();
-				entradaFichero.close();
-			}
-			catch(IOException e)
-			{
-				System.out.println(e);
-			}
-		}
-		
-		return contadorProfesores;
-	}
+	
 	
 	/* INTERFAZ
 	 * Comentario: Cuenta el numero de profesores que están por debajo de la media de edad en el fichero personal.txt
@@ -868,9 +508,8 @@ public class Gestion
 		FileReader reader = null;
 		BufferedReader br = null;
 		int contadorProfesores = 0;
-		ProfesorImpl profesor = null;
-		
-		String ID, nombre, sexoStr, edadStr, marcaBorrado;
+		String[] campos;
+		int edad, marcaBorrado;
 		
 		try
 		{
@@ -878,26 +517,20 @@ public class Gestion
 			reader = new FileReader(fichero);
 			br = new BufferedReader(reader);
 			
-			//ProfesorImpl profesor = (ProfesorImpl)reader.readObject();
-			ID = br.readLine();						//Lee el primer ID
+
+			String linea = br.readLine();						//Lee el primer registro
 			
-			while(ID != null)
+			while(linea != null)
 			{
-				nombre = br.readLine();					//Lee el nombre
-				sexoStr = br.readLine();				//Lee el sexo
-				edadStr = br.readLine();				//Lee la edad
-				marcaBorrado = br.readLine();			//Lee la marca de borrado
+				campos = linea.split(",");
 				
-				if(Integer.parseInt(marcaBorrado) == 0)
-				{
-					profesor = new ProfesorImpl(Integer.parseInt(ID), nombre, sexoStr.charAt(0), Integer.parseInt(edadStr));
-					
-					if(profesor.getEdad() < edadPromedio2())
-						contadorProfesores++;
-				}
+				edad = Integer.parseInt(campos[3]);
+				marcaBorrado = Integer.parseInt(campos[4]);			//Lee la marca de borrado
 				
-				br.readLine();		//Linea vacia entre cada registro de Profesor
-				ID = br.readLine();
+				if(marcaBorrado == 0 && edad > edadPromedio2())
+					contadorProfesores++;
+				
+				linea = br.readLine();		//Lee el siguient registro
 			}
 		}
 		catch(EOFException e)
