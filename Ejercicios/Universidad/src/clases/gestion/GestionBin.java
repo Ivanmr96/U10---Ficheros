@@ -11,26 +11,30 @@ import clases.utilidad.Utilidades;
 
 public class GestionBin 
 {
+	private String ruta;
+	
+	public GestionBin(String ruta){ this.ruta = ruta; }
+	
 	/* INTERFAZ
-	 * Comentario: Inserta un profesor en el fichero "personal.txt"
+	 * Comentario: Inserta un profesor en el fichero ruta
 	 * Prototipo: public void insertarProfesor(ProfesorImpl prof)
 	 * Entrada: Un profesor a insertar
 	 * Precondiciones: No hay
 	 * Salida: No hay
-	 * Postcondiciones: El fichero "personal.txt" se modifica, insertando al final el profesor indicado
+	 * Postcondiciones: El fichero ruta se modifica, insertando al final el profesor indicado
 	 */
 	public void insertarProfesor(ProfesorImpl prof)
 	{
 		Utilidades utils = new Utilidades();
 		
-		utils.insertarObjeto(prof, "personal.txt");
+		utils.insertarObjeto(prof, ruta);
 	}
 	
 	/* INTERFAZ
-	 * Comentario: Busca el profesor más joven en el fichero "personal.txt"
+	 * Comentario: Busca el profesor más joven en el fichero ruta
 	 * Prototipo: public ProfesorImpl profesorMasJoven()
 	 * Entrada: No hay
-	 * Precondiciones: El fichero "personal.txt" debe existir y tener al menos un profesor
+	 * Precondiciones: El fichero ruta debe existir y tener al menos un profesor
 	 * Salida: Un Profesor
 	 * Postcondiciones: Asociado al nombre devuelve el profesor más joven
 	 */
@@ -43,7 +47,7 @@ public class GestionBin
 		
 		try
 		{
-			fichero = new File("personal.txt");
+			fichero = new File(ruta);
 			entradaFichero = new FileInputStream(fichero);
 			reader = new ObjectInputStream(entradaFichero);
 			ProfesorImpl profesor = (ProfesorImpl)reader.readObject();
@@ -81,10 +85,10 @@ public class GestionBin
 	}
 	
 	/* INTERFAZ
-	 * Comentario: Busca el profesor con más edad en el fichero "personal.txt"
+	 * Comentario: Busca el profesor con más edad en el fichero ruta
 	 * Prototipo: public ProfesorImpl profesorMayor()
 	 * Entrada: No hay
-	 * Precondiciones: El fichero "personal.txt" debe existir y tener al menos un profesor
+	 * Precondiciones: El fichero ruta debe existir y tener al menos un profesor
 	 * Salida: Un Profesor
 	 * Postcondiciones: Asociado al nombre devuelve el profesor con más edad.
 	 */
@@ -97,7 +101,7 @@ public class GestionBin
 		
 		try
 		{
-			fichero = new File("personal.txt");
+			fichero = new File(ruta);
 			entradaFichero = new FileInputStream(fichero);
 			reader = new ObjectInputStream(entradaFichero);
 			ProfesorImpl profesor = (ProfesorImpl)reader.readObject();
@@ -134,12 +138,12 @@ public class GestionBin
 	}
 	
 	/* INTERFAZ
-	 * Comentario: Muestra en pantalla todos los profesores del fichero "personal.txt"
+	 * Comentario: Muestra en pantalla todos los profesores del fichero ruta
 	 * Prototipo: public void mostrarProfesores()
 	 * Entrada: No hay
-	 * Precondiciones: El fichero "personal.txt" debe existir y tener al menos un profesor
+	 * Precondiciones: El fichero ruta debe existir y tener al menos un profesor
 	 * Salida: No hay
-	 * Postcondiciones: No hay. Imprime en pantalla todos los profesores del fichero "personal.txt"
+	 * Postcondiciones: No hay. Imprime en pantalla todos los profesores del fichero ruta
 	 */
 	public void mostrarProfesores()
 	{
@@ -149,7 +153,7 @@ public class GestionBin
 		
 		try
 		{
-			fichero = new File("personal.txt");
+			fichero = new File(ruta);
 			entradaFichero = new FileInputStream(fichero);
 			reader = new ObjectInputStream(entradaFichero);
 			
@@ -187,12 +191,12 @@ public class GestionBin
 	}
 	
 	/* INTERFAZ
-	 * Comentario: Calcula la edad promedio de todos los profesores del fichero "personal.txt"
+	 * Comentario: Calcula la edad promedio de todos los profesores del fichero ruta
 	 * Prototipo: public double edadPromedio()
 	 * Entrada: No hay
-	 * Precondiciones: El fichero "personal.txt" debe existir y tener al menos un profesor
+	 * Precondiciones: El fichero ruta debe existir y tener al menos un profesor
 	 * Salida: Un double con la edad media
-	 * Postcondiciones: Asociado al nombre devuelve la media de edad de los profesores del fichero "personal.txt"
+	 * Postcondiciones: Asociado al nombre devuelve la media de edad de los profesores del fichero ruta
 	 */
 	public double edadPromedio()
 	{
@@ -205,7 +209,7 @@ public class GestionBin
 		
 		try
 		{
-			fichero = new File("personal.txt");
+			fichero = new File(ruta);
 			entradaFichero = new FileInputStream(fichero);
 			reader = new ObjectInputStream(entradaFichero);
 			
@@ -252,7 +256,7 @@ public class GestionBin
 	 * Comentario: Cuenta el numero de profesores que están por encima de la media de edad en el fichero personal.txt
 	 * Prototipo: public int belowAverageTeachers()
 	 * Entrada: No hay
-	 * Precondiciones: El fichero "personal.txt" debe existir y tener al menos un profesor
+	 * Precondiciones: El fichero ruta debe existir y tener al menos un profesor
 	 * Salida: Un int con el numero de profesores por encima de la media de edad
 	 * Postcondiciones: Asociado al nombre devuelve el número de profesores por encima del a media de edad en el fichero personal.txt
 	 */
@@ -265,7 +269,7 @@ public class GestionBin
 		
 		try
 		{
-			fichero = new File("personal.txt");
+			fichero = new File(ruta);
 			entradaFichero = new FileInputStream(fichero);
 			reader = new ObjectInputStream(entradaFichero);
 			
@@ -309,7 +313,7 @@ public class GestionBin
 	 * Comentario: Cuenta el numero de profesores que están por debajo de la media de edad en el fichero personal.txt
 	 * Prototipo: public int belowAverageTeachers()
 	 * Entrada: No hay
-	 * Precondiciones: El fichero "personal.txt" debe existir y tener al menos un profesor
+	 * Precondiciones: El fichero ruta debe existir y tener al menos un profesor
 	 * Salida: Un int con el numero de profesores por debajo de la media de edad
 	 * Postcondiciones: Asociado al nombre devuelve el número de profesores por debajo del a media de edad en el fichero personal.txt
 	 */
@@ -322,7 +326,7 @@ public class GestionBin
 		
 		try
 		{
-			fichero = new File("personal.txt");
+			fichero = new File(ruta);
 			entradaFichero = new FileInputStream(fichero);
 			reader = new ObjectInputStream(entradaFichero);
 			

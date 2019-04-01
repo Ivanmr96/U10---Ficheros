@@ -1,20 +1,19 @@
 package clases.gestion;
 
 import java.io.*;
-
 import clases.basicas.ProfesorImpl;
-import clases.utilidad.Utilidades;
 
 
-public class Gestion
+public class GestionTxt
 {	
-	//TODO Métodos para borrar un profesor y actualizar un profesor
-	//TODO Cambiar la representacion como String de la clase Profesor(en lugar de varias lineas, en una sola) 
+	//TODO Método para actualizar un profesor
 	
+	private String ruta;
 	
-	
+	public GestionTxt(String ruta){ this.ruta = ruta;}
+
 	/* INTERFAZ
-	 * Comentario: Inserta un profesor en el fichero "personal.txt"
+	 * Comentario: Inserta un profesor en el fichero ruta
 	 * Prototipo: public boolean insertarProfesor(ProfesorImpl prof)
 	 * Entrada: Un profesor a insertar
 	 * Precondiciones: No hay
@@ -23,7 +22,7 @@ public class Gestion
 	 * 					- True si se inserto correctamente el profesor
 	 * 					- False si no se pudo insertar porque ya existe un profesor con el mismo ID.
 	 */
-	public boolean insertarProfesor2(ProfesorImpl prof)
+	public boolean insertarProfesor(ProfesorImpl prof)
 	{
 		boolean ret = false;
 		File fichero = null;
@@ -32,7 +31,7 @@ public class Gestion
 		//Crea el fichero si no existe.
 		try
 		{
-			fichero = new File("personal.txt");
+			fichero = new File(ruta);
 			
 			if(fichero.exists() == false)
 				fichero.createNewFile();
@@ -46,7 +45,7 @@ public class Gestion
 		{
 			try
 			{
-				//fichero = new File("personal.txt");
+				//fichero = new File(ruta);
 				writer = new FileWriter(fichero, true);
 			
 				writer.write(prof.toString());			//Atributos del profesor
@@ -77,7 +76,7 @@ public class Gestion
 	 * Comentario: Busca un profesor por su ID
 	 * Prototipo: public ProfesorImpl buscarPorID(int ID)
 	 * Entrada: Un entero con la ID del profesor a buscar
-	 * Precondiciones: El fichero "personal.txt" debe existir
+	 * Precondiciones: El fichero ruta debe existir
 	 * Salida: Un ProfesorImpl
 	 * Postcondiciones: Asociado al nombre devuelve el Profesor correspondiente a la ID pasada por parametro,
 	 * 					O bien null si no existe ningun profesor con esa ID.
@@ -91,7 +90,7 @@ public class Gestion
 		
 		try
 		{
-			fichero = new File("personal.txt");
+			fichero = new File(ruta);
 			reader = new FileReader(fichero);
 			br = new BufferedReader(reader);
 			
@@ -155,7 +154,7 @@ public class Gestion
 	 * Comentario: Comprueba si existe un profesor buscandolo por su ID
 	 * Prototipo: public boolean comprobarProfesor(int ID)
 	 * Entrada: Un entero con la ID del profesor a comprobar
-	 * Precondiciones: El fichero "personal.txt" debe existir
+	 * Precondiciones: El fichero ruta debe existir
 	 * Salida: Un boolean indicando si el profesor existe o no
 	 * Postcondiciones: Asociado al nombre devuelve true si el profesor con la ID indicada existe, y false si no existe.
 	 */
@@ -169,9 +168,8 @@ public class Gestion
 		return ret;
 	}
 	
-	
-	
-	public ProfesorImpl profesorMasJoven2()
+	//TODO Interfaz aqui
+	public ProfesorImpl profesorMasJoven()
 	{
 		File fichero = null;
 		FileReader reader = null;
@@ -186,7 +184,7 @@ public class Gestion
 		
 		try
 		{
-			fichero = new File("personal.txt");
+			fichero = new File(ruta);
 			reader = new FileReader(fichero);
 			br = new BufferedReader(reader);
 			
@@ -232,9 +230,8 @@ public class Gestion
 		return masJoven;
 	}
 	
-	
-	
-	public ProfesorImpl profesorMayor2()
+	//TODO Interfaz aqui
+	public ProfesorImpl profesorMayor()
 	{
 		File fichero = null;
 		FileReader reader = null;
@@ -250,7 +247,7 @@ public class Gestion
 		
 		try
 		{
-			fichero = new File("personal.txt");
+			fichero = new File(ruta);
 			reader = new FileReader(fichero);
 			br = new BufferedReader(reader);
 			
@@ -297,9 +294,8 @@ public class Gestion
 		return mayor;
 	}
 	
-	
-	
-	public void mostrarProfesores2()
+	//TODO Interfaz aqui
+	public void mostrarProfesores()
 	{
 		File fichero = null;
 		FileReader reader = null;
@@ -313,7 +309,7 @@ public class Gestion
 		
 		try
 		{
-			fichero = new File("personal.txt");
+			fichero = new File(ruta);
 			reader = new FileReader(fichero);
 			br = new BufferedReader(reader);
 			
@@ -358,18 +354,16 @@ public class Gestion
 			}
 		}
 	}
-	
-	
-	
+
 	/* INTERFAZ
-	 * Comentario: Calcula la edad promedio de todos los profesores del fichero "personal.txt"
+	 * Comentario: Calcula la edad promedio de todos los profesores del fichero ruta
 	 * Prototipo: public double edadPromedio()
 	 * Entrada: No hay
-	 * Precondiciones: El fichero "personal.txt" debe existir y tener al menos un profesor
+	 * Precondiciones: El fichero ruta debe existir y tener al menos un profesor
 	 * Salida: Un double con la edad media
-	 * Postcondiciones: Asociado al nombre devuelve la media de edad de los profesores del fichero "personal.txt"
+	 * Postcondiciones: Asociado al nombre devuelve la media de edad de los profesores del fichero ruta
 	 */
-	public double edadPromedio2()
+	public double edadPromedio()
 	{
 		double media;
 		
@@ -383,7 +377,7 @@ public class Gestion
 		
 		try
 		{
-			fichero = new File("personal.txt");
+			fichero = new File(ruta);
 			reader = new FileReader(fichero);
 			br = new BufferedReader(reader);
 			
@@ -427,18 +421,16 @@ public class Gestion
 		
 		return media;
 	}
-	
-	
-	
+
 	/* INTERFAZ
 	 * Comentario: Cuenta el numero de profesores que están por encima de la media de edad en el fichero personal.txt
 	 * Prototipo: public int belowAverageTeachers()
 	 * Entrada: No hay
-	 * Precondiciones: El fichero "personal.txt" debe existir
+	 * Precondiciones: El fichero ruta debe existir
 	 * Salida: Un int con el numero de profesores por encima de la media de edad
 	 * Postcondiciones: Asociado al nombre devuelve el número de profesores por encima del a media de edad en el fichero personal.txt
 	 */
-	public int aboveAverageTeachers2()
+	public int aboveAverageTeachers()
 	{
 		File fichero = null;
 		FileReader reader = null;
@@ -449,7 +441,7 @@ public class Gestion
 		
 		try
 		{
-			fichero = new File("personal.txt");
+			fichero = new File(ruta);
 			reader = new FileReader(fichero);
 			br = new BufferedReader(reader);
 			
@@ -463,7 +455,69 @@ public class Gestion
 				edad = Integer.parseInt(campos[3]);
 				marcaBorrado = Integer.parseInt(campos[4]);			//Lee la marca de borrado
 				
-				if(marcaBorrado == 0 && edad < edadPromedio2())
+				if(marcaBorrado == 0 && edad < edadPromedio())
+					contadorProfesores++;
+				
+				linea = br.readLine();		//Lee el siguient registro
+			}
+		}
+		catch(EOFException e)
+		{
+		}
+		catch(IOException e)
+		{
+			System.out.println(e);
+		}
+		finally
+		{
+			try
+			{
+				br.close();
+				reader.close();
+			}
+			catch(IOException e)
+			{
+				System.out.println(e);
+			}
+		}
+		
+		return contadorProfesores;
+	}
+
+	/* INTERFAZ
+	 * Comentario: Cuenta el numero de profesores que están por debajo de la media de edad en el fichero personal.txt
+	 * Prototipo: public int belowAverageTeachers()
+	 * Entrada: No hay
+	 * Precondiciones: El fichero ruta debe existir
+	 * Salida: Un int con el numero de profesores por debajo de la media de edad
+	 * Postcondiciones: Asociado al nombre devuelve el número de profesores por debajo del a media de edad en el fichero personal.txt
+	 */
+	public int belowAverageTeachers()
+	{
+		File fichero = null;
+		FileReader reader = null;
+		BufferedReader br = null;
+		int contadorProfesores = 0;
+		String[] campos;
+		int edad, marcaBorrado;
+		
+		try
+		{
+			fichero = new File(ruta);
+			reader = new FileReader(fichero);
+			br = new BufferedReader(reader);
+			
+
+			String linea = br.readLine();						//Lee el primer registro
+			
+			while(linea != null)
+			{
+				campos = linea.split(",");
+				
+				edad = Integer.parseInt(campos[3]);
+				marcaBorrado = Integer.parseInt(campos[4]);			//Lee la marca de borrado
+				
+				if(marcaBorrado == 0 && edad > edadPromedio())
 					contadorProfesores++;
 				
 				linea = br.readLine();		//Lee el siguient registro
@@ -492,67 +546,13 @@ public class Gestion
 		return contadorProfesores;
 	}
 	
-	
-	
-	/* INTERFAZ
-	 * Comentario: Cuenta el numero de profesores que están por debajo de la media de edad en el fichero personal.txt
-	 * Prototipo: public int belowAverageTeachers()
-	 * Entrada: No hay
-	 * Precondiciones: El fichero "personal.txt" debe existir
-	 * Salida: Un int con el numero de profesores por debajo de la media de edad
-	 * Postcondiciones: Asociado al nombre devuelve el número de profesores por debajo del a media de edad en el fichero personal.txt
-	 */
-	public int belowAverageTeachers2()
+	//TODO Interfaz aqui
+	public boolean borrarProfesor(int ID)
 	{
-		File fichero = null;
-		FileReader reader = null;
-		BufferedReader br = null;
-		int contadorProfesores = 0;
-		String[] campos;
-		int edad, marcaBorrado;
+		boolean exito = false;
 		
-		try
-		{
-			fichero = new File("personal.txt");
-			reader = new FileReader(fichero);
-			br = new BufferedReader(reader);
-			
-
-			String linea = br.readLine();						//Lee el primer registro
-			
-			while(linea != null)
-			{
-				campos = linea.split(",");
-				
-				edad = Integer.parseInt(campos[3]);
-				marcaBorrado = Integer.parseInt(campos[4]);			//Lee la marca de borrado
-				
-				if(marcaBorrado == 0 && edad > edadPromedio2())
-					contadorProfesores++;
-				
-				linea = br.readLine();		//Lee el siguient registro
-			}
-		}
-		catch(EOFException e)
-		{
-		}
-		catch(IOException e)
-		{
-			System.out.println(e);
-		}
-		finally
-		{
-			try
-			{
-				br.close();
-				reader.close();
-			}
-			catch(IOException e)
-			{
-				System.out.println(e);
-			}
-		}
+		System.out.println("borrarProfesor en resguardo.");		//TODO Implementar borrarProfesor(int ID)
 		
-		return contadorProfesores;
+		return exito;
 	}
 }
