@@ -7,10 +7,6 @@ import clases.basicas.ProfesorImpl;
 public class GestionTxt
 {	
 	//TODO Método para actualizar un profesor
-	
-	private String ruta;
-	
-	public GestionTxt(String ruta){ this.ruta = ruta;}
 
 	/* INTERFAZ
 	 * Comentario: Inserta un profesor en el fichero ruta
@@ -22,7 +18,7 @@ public class GestionTxt
 	 * 					- True si se inserto correctamente el profesor
 	 * 					- False si no se pudo insertar porque ya existe un profesor con el mismo ID.
 	 */
-	public boolean insertarProfesor(ProfesorImpl prof)
+	public boolean insertarProfesor(ProfesorImpl prof, String ruta)
 	{
 		boolean ret = false;
 		File fichero = null;
@@ -41,7 +37,7 @@ public class GestionTxt
 			System.out.println(e);
 		}
 		
-		if(comprobarProfesor(prof.getID()) == false)	//Comprueba que el ID no exista ya en el fichero.
+		if(comprobarProfesor(prof.getID(), ruta) == false)	//Comprueba que el ID no exista ya en el fichero.
 		{
 			try
 			{
@@ -81,7 +77,7 @@ public class GestionTxt
 	 * Postcondiciones: Asociado al nombre devuelve el Profesor correspondiente a la ID pasada por parametro,
 	 * 					O bien null si no existe ningun profesor con esa ID.
 	 */
-	public ProfesorImpl buscarPorID(int ID)
+	public ProfesorImpl buscarPorID(int ID, String ruta)
 	{
 		File fichero = null;
 		FileReader reader = null;
@@ -158,18 +154,18 @@ public class GestionTxt
 	 * Salida: Un boolean indicando si el profesor existe o no
 	 * Postcondiciones: Asociado al nombre devuelve true si el profesor con la ID indicada existe, y false si no existe.
 	 */
-	public boolean comprobarProfesor(int ID)
+	public boolean comprobarProfesor(int ID, String ruta)
 	{
 		boolean ret = true;
 		
-		if(buscarPorID(ID) == null)
+		if(buscarPorID(ID, ruta) == null)
 			ret = false;
 		
 		return ret;
 	}
 	
 	//TODO Interfaz aqui
-	public ProfesorImpl profesorMasJoven()
+	public ProfesorImpl profesorMasJoven(String ruta)
 	{
 		File fichero = null;
 		FileReader reader = null;
@@ -179,7 +175,7 @@ public class GestionTxt
 		char sexo = ' ';
 		int edad = 0;
 		int marcaBorrado;
-		ProfesorImpl masJoven = new ProfesorImpl(0, "", ' ', 100);
+		ProfesorImpl masJoven = new ProfesorImpl(0, "", ' ', 10000);
 		ProfesorImpl profesor;
 		
 		try
@@ -231,7 +227,7 @@ public class GestionTxt
 	}
 	
 	//TODO Interfaz aqui
-	public ProfesorImpl profesorMayor()
+	public ProfesorImpl profesorMayor(String ruta)
 	{
 		File fichero = null;
 		FileReader reader = null;
@@ -295,7 +291,7 @@ public class GestionTxt
 	}
 	
 	//TODO Interfaz aqui
-	public void mostrarProfesores()
+	public void mostrarProfesores(String ruta)
 	{
 		File fichero = null;
 		FileReader reader = null;
@@ -363,7 +359,7 @@ public class GestionTxt
 	 * Salida: Un double con la edad media
 	 * Postcondiciones: Asociado al nombre devuelve la media de edad de los profesores del fichero ruta
 	 */
-	public double edadPromedio()
+	public double edadPromedio(String ruta)
 	{
 		double media;
 		
@@ -430,7 +426,7 @@ public class GestionTxt
 	 * Salida: Un int con el numero de profesores por encima de la media de edad
 	 * Postcondiciones: Asociado al nombre devuelve el número de profesores por encima del a media de edad en el fichero personal.txt
 	 */
-	public int aboveAverageTeachers()
+	public int aboveAverageTeachers(String ruta)
 	{
 		File fichero = null;
 		FileReader reader = null;
@@ -455,7 +451,7 @@ public class GestionTxt
 				edad = Integer.parseInt(campos[3]);
 				marcaBorrado = Integer.parseInt(campos[4]);			//Lee la marca de borrado
 				
-				if(marcaBorrado == 0 && edad < edadPromedio())
+				if(marcaBorrado == 0 && edad < edadPromedio(ruta))
 					contadorProfesores++;
 				
 				linea = br.readLine();		//Lee el siguient registro
@@ -492,7 +488,7 @@ public class GestionTxt
 	 * Salida: Un int con el numero de profesores por debajo de la media de edad
 	 * Postcondiciones: Asociado al nombre devuelve el número de profesores por debajo del a media de edad en el fichero personal.txt
 	 */
-	public int belowAverageTeachers()
+	public int belowAverageTeachers(String ruta)
 	{
 		File fichero = null;
 		FileReader reader = null;
@@ -517,7 +513,7 @@ public class GestionTxt
 				edad = Integer.parseInt(campos[3]);
 				marcaBorrado = Integer.parseInt(campos[4]);			//Lee la marca de borrado
 				
-				if(marcaBorrado == 0 && edad > edadPromedio())
+				if(marcaBorrado == 0 && edad > edadPromedio(ruta))
 					contadorProfesores++;
 				
 				linea = br.readLine();		//Lee el siguient registro
@@ -547,7 +543,7 @@ public class GestionTxt
 	}
 	
 	//TODO Interfaz aqui
-	public boolean borrarProfesor(int ID)
+	public boolean borrarProfesor(int ID, String ruta)
 	{
 		boolean exito = false;
 		

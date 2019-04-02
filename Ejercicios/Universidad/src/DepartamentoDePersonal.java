@@ -92,12 +92,14 @@ public class DepartamentoDePersonal
 {
 	public static void main(String[] args) 
 	{
-		GestionTxt gestion = new GestionTxt("profesores.txt");
+		GestionTxt gestion = new GestionTxt();
+		String ruta = "profesores.txt";
 		Validaciones validaciones = new Validaciones();
 		int opcionMenuPrincipal, opcionSubMenu, ID;
 		@SuppressWarnings("resource")
 		Scanner entrada = new Scanner(System.in);
 		ProfesorImpl profesor;
+		boolean exitoInsercion, exitoBorrado;
 		
 		//Mostrar menu principal y validar opcion
 		opcionMenuPrincipal = validaciones.mostrarMenuPrincipalYValidarOpcion();
@@ -108,18 +110,27 @@ public class DepartamentoDePersonal
 			{
 				case 1:
 		 			//insertarProfesor *
-					profesor = validaciones.leerYValidarProfesor();
-					gestion.insertarProfesor(profesor);				//TODO Mejorar esto (informar al usuario sobre si se insertó correctamente o no)
+					profesor = validaciones.leerYValidarProfesor(ruta);
+					exitoInsercion = gestion.insertarProfesor(profesor, ruta);				//TODO Mejorar esto (informar al usuario sobre si se insertó correctamente o no)
+					if(exitoInsercion)
+						System.out.println("El profesor se inserto correctamente");
+					else
+						System.out.println("No se pudo insertar el profesor. La ID ya existe");
 					
 					break;
 				case 2:
 		 			//borrarProfesor *
+					System.out.print("Inserta ID del profesor a borrar: ");
 					ID = entrada.nextInt();
-					gestion.borrarProfesor(ID);						//TODO Mejorar esto (informar sobre si se borró correctamente o no)
-					
+					exitoBorrado = gestion.borrarProfesor(ID, ruta);						//TODO Mejorar esto (informar sobre si se borró correctamente o no)
+					if(exitoBorrado)
+						System.out.println("El profesor se ha borrado correctamente");
+					else
+						System.out.println("El profesor no pudo borrarse. La ID no existe");
 					break;
 				case 3:
 		 			//subMenuConsultas *
+				
 					//Mostrar subMenuConsultas y validar opcion *
 					opcionSubMenu = validaciones.mostrarSubMenuConsultasYValidarOpcion();
 					
@@ -129,32 +140,32 @@ public class DepartamentoDePersonal
 						{
 							case 1:
 					 			//mostrarProfesores *
-								gestion.mostrarProfesores();
+								gestion.mostrarProfesores(ruta);
 								
 								break;
 							case 2:
 								//edadPromedio *
-					 			System.out.println("Edad promedio: " + gestion.edadPromedio());
+					 			System.out.println("Edad promedio: " + gestion.edadPromedio(ruta));
 					 			
 								break;
 							case 3:
 								//profesorMayor *
-								profesor = gestion.profesorMayor();
+								profesor = gestion.profesorMayor(ruta);
 					 			System.out.println("Profesor mayor: " + profesor.getNombre() + "(" + profesor.getEdad() + " años)");
 								break;
 							case 4:
 								//profesorMasJoven *
-								profesor =gestion.profesorMasJoven();
+								profesor =gestion.profesorMasJoven(ruta);
 								System.out.println("Profesor mas joven: " + profesor.getNombre() + "(" + profesor.getEdad() + " años)");
 								break;
 							case 5:
 					 			//numProfesoresPorDebajoMedia *
-					 			System.out.println("Numero de profesores con edad por debajo de la media: " + gestion.belowAverageTeachers());
+					 			System.out.println("Numero de profesores con edad por debajo de la media: " + gestion.belowAverageTeachers(ruta));
 					 			
 								break;
 							case 6:
 								//numProfesoresPorEncimaMedia *
-								System.out.println("Numero de profesores con edad por encima de la media: " + gestion.aboveAverageTeachers());
+								System.out.println("Numero de profesores con edad por encima de la media: " + gestion.aboveAverageTeachers(ruta));
 					 			
 								break;
 						}

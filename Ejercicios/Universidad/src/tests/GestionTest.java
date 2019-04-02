@@ -8,7 +8,8 @@ public class GestionTest
 {
 	public static void main(String[] args)
 	{
-		GestionTxt dep = new GestionTxt("profesores.txt");
+		GestionTxt dep = new GestionTxt();
+		String ruta = "profesores.txt";
 		
 		ProfesorImpl[] array = {
 		new ProfesorImpl(2, "Raul", 'H', 39),
@@ -21,14 +22,14 @@ public class GestionTest
 		
 		for(int i = 0 ; i < array.length ; i++)
 		{
-			dep.insertarProfesor(array[i]);
+			dep.insertarProfesor(array[i], ruta);
 		} 
 		
 		int id = 4;
 		
 		System.out.println("Intentando insertar un profesor con una ID ya existente...");
 		System.out.print("dep.insertarProfesor(new ProfesorImpl("+id+", \"Pedro\", 'H', 40)): ");
-		boolean insertado = dep.insertarProfesor(new ProfesorImpl(id, "Pedro", 'H', 40));
+		boolean insertado = dep.insertarProfesor(new ProfesorImpl(id, "Pedro", 'H', 40), ruta);
 		if(insertado == false)
 			System.out.println("Ya existe un profesor con la ID "+id);
 		
@@ -37,30 +38,30 @@ public class GestionTest
 		
 		System.out.println("Buscando un profesor por ID...");
 		System.out.print("dep.buscarPorID(4): ");
-		if(dep.comprobarProfesor(4))
+		if(dep.comprobarProfesor(4, ruta))
 		{
-			ProfesorImpl profesor = dep.buscarPorID(4);
+			ProfesorImpl profesor = dep.buscarPorID(4, ruta);
 			System.out.println(profesor.toString());
 		}
 		
 		System.out.println("------------------------------------------------------------------------------------------------");
 		
-		ProfesorImpl masJoven = dep.profesorMasJoven();
-		ProfesorImpl mayor = dep.profesorMayor();
-		double media = dep.edadPromedio();
+		ProfesorImpl masJoven = dep.profesorMasJoven(ruta);
+		ProfesorImpl mayor = dep.profesorMayor(ruta);
+		double media = dep.edadPromedio(ruta);
 		
 		System.out.println("dep.profesorMasJoven(): " + masJoven.getNombre() + "(" + masJoven.getEdad() + " años)" );
 		System.out.println("dep.profesorMayor(): " + mayor.getNombre() + "(" + mayor.getEdad() + " años)" );
 		System.out.println("dep.edadPromedio(): " + media);
-		System.out.println("Profesores por encima de la media de edad: " + dep.aboveAverageTeachers());
-		System.out.println("Profesores por debajo de la media de edad: " + dep.belowAverageTeachers());
+		System.out.println("Profesores por encima de la media de edad: " + dep.aboveAverageTeachers(ruta));
+		System.out.println("Profesores por debajo de la media de edad: " + dep.belowAverageTeachers(ruta));
 		
 		System.out.println("------------------------------------------------------------------------------------------------");
 
 		System.out.println();
 
 		System.out.println("dep.mostrarProfesores(): ");
-		dep.mostrarProfesores();
+		dep.mostrarProfesores(ruta);
 		
 	}
 }
